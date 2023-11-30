@@ -1,7 +1,7 @@
 {
   "name": "NodeBattleship",
   "version": "0.0.1",
-  "description": "Multiplayer Battleship with NodeJS and Socket.io",
+  "description": "Juego con Sockets",
   "dependencies": {
     "express": "4.12.3",
     "html-entities": "1.1.2",

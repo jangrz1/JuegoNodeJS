@@ -16,31 +16,28 @@ var gameIdCounter = 1;
 app.use(express.static(__dirname + '/public'));
 
 http.listen(port, function(){
-  console.log('Ejecuntando en http://localhost:' + port);
+  console.log('Ejecuntando en https://juego-node.onrender.com');
 });
 
 io.on('connection', function(socket) {
   console.log((new Date().toISOString()) + ' ID ' + socket.id + ' connected.');
-
-  // create user object for additional data
   users[socket.id] = {
     inGame: null,
     player: null
   }; 
 
-  // join waiting room until there are enough players to start a new game
   socket.join('waiting room');
 
   socket.on('chat', function(msg) {
     if(users[socket.id].inGame !== null && msg) {
-      console.log((new Date().toISOString()) + ' Me' + socket.id + ': ' + msg);
+      console.log((new Date().toISOString()) + 'Yo' + socket.id + ': ' + msg);
       
       socket.broadcast.to('game' + users[socket.id].inGame.id).emit('chat', {
         name: 'Contrincante',
         message: entities.encode(msg),
       });
       io.to(socket.id).emit('chat', {
-        name: 'Yo ',
+        name: 'Yo',
         message: entities.encode(msg),
       });
     }

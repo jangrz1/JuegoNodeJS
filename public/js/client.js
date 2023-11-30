@@ -1,80 +1,72 @@
 var socket = io();
 
-$(function() {
-  /**
-   * Successfully connected to server event
-   */
-  socket.on('connect', function() {
-    console.log('Connected to server.');
+$(function () {
+
+  socket.on('connect', function () {
+    console.log('Conectado al servidor.');
     $('#disconnected').hide();
-    $('#waiting-room').show();   
+    $('#waiting-room').show();
+    $('#chat').hide()
   });
 
-  /**
-   * Disconnected from server event
-   */
-  socket.on('disconnect', function() {
-    console.log('Disconnected from server.');
+  socket.on('disconnect', function () {
+    console.log('Desconectado del servidor.');
     $('#waiting-room').hide();
     $('#game').hide();
+    $('#chat').hide()
     $('#disconnected').show();
   });
 
-  /**
-   * User has joined a game
-   */
-  socket.on('join', function(gameId) {
+  socket.on('join', function (gameId) {
     Game.initGame();
     $('#messages').empty();
     $('#disconnected').hide();
     $('#waiting-room').hide();
     $('#game').show();
+    $('#chat').show()
     $('#game-number').html(gameId);
   })
 
-  /**
-   * Update player's game state
-   */
-  socket.on('update', function(gameState) {
+  socket.on('update', function (gameState) {
     Game.setTurn(gameState.turn);
     Game.updateGrid(gameState.gridIndex, gameState.grid);
   });
 
-  /**
-   * Game chat message
-   */
-  socket.on('chat', function(msg) {
-    $('#messages').append('<li><strong>' + msg.name + ':</strong> ' + msg.message + '</li>');
+  socket.on('chat', function (msg) {
+    var fecha = new Date();
+    var hora = fecha.getHours();
+    var minutos = fecha.getMinutes();
+    var periodo = (hora >= 12) ? 'p. m.' : 'a. m.';
+
+    hora = (hora % 12 === 0) ? 12 : hora % 12;
+    minutos = (minutos < 10) ? '0' + minutos : minutos;
+
+    var horaFormateada = `${hora}:${minutos} ${periodo}`;
+    console.log(msg);
+    if (msg.name === "Contrincante") {
+      $('#messages').append('<div class="remote-message"><li><strong id="name">' + msg.name + ':</strong> ' + msg.message + '</li></div>');
+      $('#messages-list').scrollTop($('#messages-list')[0].scrollHeight);
+    } else {
+      $('#messages').append('<div class="local-message"><li><strong id="">' + msg.name + ':</strong> ' + msg.message + '</li></div>');
+      $('#messages-list').scrollTop($('#messages-list')[0].scrollHeight);
+    }
+  });
+
+  socket.on('notification', function (msg) {
+    $('#messages').append('<li>' +msg.message + '</li>');
     $('#messages-list').scrollTop($('#messages-list')[0].scrollHeight);
   });
 
-  /**
-   * Game notification
-   */
-  socket.on('notification', function(msg) {
-    $('#messages').append('<li>' + msg.message + '</li>');
-    $('#messages-list').scrollTop($('#messages-list')[0].scrollHeight);
-  });
-
-  /**
-   * Change game status to game over
-   */
-  socket.on('gameover', function(isWinner) {
+  socket.on('gameover', function (isWinner) {
     Game.setGameOver(isWinner);
   });
-  
-  /**
-   * Leave game and join waiting room
-   */
-  socket.on('leave', function() {
+
+  socket.on('leave', function () {
     $('#game').hide();
     $('#waiting-room').show();
   });
 
-  /**
-   * Send chat message to server
-   */
-  $('#message-form').submit(function() {
+  $('#message-form').submit(function () {
     socket.emit('chat', $('#message').val());
     $('#message').val('');
     return false;
@@ -82,10 +74,6 @@ $(function() {
 
 });
 
-/**
- * Send leave game request
- * @param {type} e Event
- */
 function sendLeaveRequest(e) {
   e.preventDefault();
   socket.emit('leave');

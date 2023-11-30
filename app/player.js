@@ -1,10 +1,7 @@
 var Ship = require('./ship.js');
 var Settings = require('./settings.js');
 
-/**
- * Player constructor
- * @param {type} id Socket ID
- */
+
 function Player(id) {
   var i;
   
@@ -19,7 +16,6 @@ function Player(id) {
   }
 
   if(!this.createRandomShips()) {
-    // Random placement of ships failed. Use fallback layout (should rarely happen).
     this.ships = [];
     this.createShips();
   }

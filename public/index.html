@@ -1,99 +1,103 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>NodeBattleship</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="./css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
-<div class="container">
-    <div class="row vertical-center-row">
-        <div class="col-md-12">
-
-            <!-- Disconnected from server -->
-            <div id="disconnected">
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4 text-center">
-                        <div class="alert alert-danger">
-                            <p>Sin conexión al servidor :(</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Waiting room -->
-            <div id="waiting-room" style="display:none;">
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4 text-center">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">Sala de Espera</div>
-                            <div class="panel-body">
-                                <p>Esperando a otro jugador...</p>
+    <div class="container">
+        <div class="row vertical-center-row">
+            <div class="col-md-12">
+                <div id="disconnected">
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4 text-center">
+                            <div class="alert alert-danger">
+                                <p>Sin conexión al servidor :(</p>
+                                <div class="img">
+                                    <img id="truste" src="./img/truste.gif" alt="" srcset="">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Game -->
-            <div id="game" style="display:none;">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">Battizhip #<span id="game-number"></span></div>
-                            <div class="panel-body">
-
-                                <!-- Player grids -->
-                                <div class="row">
-                                    <div class="col-md-6 player-grid text-center">
-                                        <h3>Mi Tablero</h3>
-                                        <canvas id="canvas-grid1" width="361" height="361">Browser does not support canvas.</canvas>
+                <div class="waiting-room" id="waiting-room" style="display:none;">
+                    <div class="myCard">
+                        <div class="innerCard">
+                            <div class="frontSide">
+                                <p class="title1">¡¡Bienvenido!!</p>
+                                <p>Esperando a otro jugador...</p>
+                                <div class="img">
+                                    <img id="loading" src="./img/loading.gif" alt="a">
+                                </div>
+                            </div>
+                            <div class="backSide">
+                                <p class="title">Este juego lo creamos con mucho amor y horas de chamba, Almita y Oli
+                                    los tqm</p>
+                                <p class="little-text">Por favor ya paseme SD :')</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="game" style="display:none;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">Battizhip #<span id="game-number"></span></div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6 player-grid text-center">
+                                            <h3>Mi Tablero</h3>
+                                            <canvas id="canvas-grid1" width="361" height="361">Browser does not support
+                                                canvas.</canvas>
+                                        </div>
+                                        <div class="col-md-6 player-grid text-center">
+                                            <h3>Tablero del Oponente</h3>
+                                            <canvas id="canvas-grid2" width="361" height="361">Browser does not support
+                                                canvas.</canvas>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6 player-grid text-center">
-                                        <h3>Tablero del Oponente</h3>
-                                        <canvas id="canvas-grid2" width="361" height="361">Browser does not support canvas.</canvas>
+                                    
+
+                                </div>
+                                <li class="list-group-item text-center" id="turn-status"></li>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="chat">
+                    <ul class="list-group">
+                        <li class="list-group-item" id="messages-list">
+                            <ul id="messages"></ul>
+                        </li>
+                        <li class="list-group-item">
+                            <form id="message-form" action="">
+                                <div class="input-group">
+                                    <input id="message" class="form-control" autocomplete="off" placeholder="Escribe un Mensaje..."/>
+                                    <div class="input-group-btn">
+                                        
+                                        <button class="btn btn-primary">
+                                            Enviar
+                                        </button>
                                     </div>
                                 </div>
-                                
-                                
-                            </div>
-
-                            <ul class="list-group">
-                                <!-- Status -->
-                                <li class="list-group-item text-center" id="turn-status"></li>
-
-                                <!-- Chat messages -->
-                                <li class="list-group-item" id="messages-list">
-                                    <ul id="messages"></ul>
-                                </li>
-
-                                <!-- Send chat message form -->
-                                <li class="list-group-item">
-                                    <form id="message-form" action="">
-                                        <div class="input-group">
-                                        <input id="message" class="form-control" autocomplete="off" />
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-primary">Enviar Mensaje</button>
-                                        </div>
-                                        </div>
-                                    </form>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div>
+                            </form>
+                        </li>
+                    </ul>
                 </div>
             </div>
-
         </div>
     </div>
-</div>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
-<script type="text/javascript" src="/js/game.js"></script>
-<script type="text/javascript" src="/js/client.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+    <script type="text/javascript" src="/js/game.js"></script>
+    <script type="text/javascript" src="/js/client.js"></script>
 </body>
+
 </html>

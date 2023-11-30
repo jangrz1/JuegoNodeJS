@@ -187,7 +187,7 @@ var Game = (function() {
     var ship, i, x, y,
         shipWidth, shipLength;
 
-    context[gridIndex].fillStyle = '#444444';
+    context[gridIndex].fillStyle = '#D6D6D6';
     
     for(i = 0; i < grid[gridIndex].ships.length; i++) {
       ship = grid[gridIndex].ships[i];
@@ -204,40 +204,54 @@ var Game = (function() {
       }
     }
   };
+  var audioElement = new Audio('/audio/boom.mp3');
+  var shotComplete = false;
   
-  /**
-   * Draw shot marks on grid (black crosses for missed and red circles for hits)
-   * @param {Number} gridIndex
-   */
-  function drawMarks(gridIndex) {
-    var i, j, squareX, squareY;
-
-    for(i = 0; i < gridRows; i++) {
-      for(j = 0; j < gridCols; j++) {
-        squareX = j * (squareWidth + gridBorder) + gridBorder;
-        squareY = i * (squareHeight + gridBorder) + gridBorder;
-
-        // draw black cross if there is a missed shot on square
-        if(grid[gridIndex].shots[i * gridCols + j] === 1) {
-          context[gridIndex].beginPath();
-          context[gridIndex].moveTo(squareX + markPadding, squareY + markPadding);
-          context[gridIndex].lineTo(squareX + squareWidth - markPadding, squareY + squareHeight - markPadding);
-          context[gridIndex].moveTo(squareX + squareWidth - markPadding, squareY + markPadding);
-          context[gridIndex].lineTo(squareX + markPadding, squareY + squareHeight - markPadding);
-          context[gridIndex].strokeStyle = '#FFFFFF';
-          context[gridIndex].stroke();
-        }
-        // draw red circle if hit on square
-        else if(grid[gridIndex].shots[i * gridCols + j] === 2) {
-          context[gridIndex].beginPath();
-          context[gridIndex].arc(squareX + squareWidth / 2, squareY + squareWidth / 2,
-                                 squareWidth / 2 - markPadding, 0, 2 * Math.PI, false);
-          context[gridIndex].fillStyle = '#E62E2E';
-          context[gridIndex].fill();
-        }
+  // Agrega un evento de clic al canvas para activar la reproducción del sonido
+  canvas[1].addEventListener('click', function() {
+      // Verifica si se ha completado un disparo antes de reproducir el sonido
+      if (shotComplete) {
+          playSound();
       }
-    }
-  };
+  });
+  
+  function drawMarks(gridIndex) {
+      var i, j, squareX, squareY;
+      shotComplete = false;
+  
+      for(i = 0; i < gridRows; i++) {
+          for(j = 0; j < gridCols; j++) {
+              squareX = j * (squareWidth + gridBorder) + gridBorder;
+              squareY = i * (squareHeight + gridBorder) + gridBorder;
+  
+              if(grid[gridIndex].shots[i * gridCols + j] === 1) {
+                  context[gridIndex].beginPath();
+                  context[gridIndex].moveTo(squareX + markPadding, squareY + markPadding);
+                  context[gridIndex].lineTo(squareX + squareWidth - markPadding, squareY + squareHeight - markPadding);
+                  context[gridIndex].moveTo(squareX + squareWidth - markPadding, squareY + markPadding);
+                  context[gridIndex].lineTo(squareX + markPadding, squareY + squareHeight - markPadding);
+                  context[gridIndex].strokeStyle = '#000000';
+                  context[gridIndex].stroke();
+                  shotComplete = true;
+              }
+              else if(grid[gridIndex].shots[i * gridCols + j] === 2) {
+                  context[gridIndex].beginPath();
+                  context[gridIndex].arc(squareX + squareWidth / 2, squareY + squareWidth / 2,
+                                         squareWidth / 2 - markPadding, 0, 2 * Math.PI, false);
+                  context[gridIndex].fillStyle = '#E62E2E';
+                  context[gridIndex].fill();
+              }
+          }
+      }
+  }
+  
+  function playSound() {
+      if (audioElement.paused) {
+          audioElement.currentTime = 0;
+          audioElement.play();
+      }
+  }
+  
 
   return {
     'initGame': initGame,
