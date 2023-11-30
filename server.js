@@ -31,22 +31,16 @@ io.on('connection', function(socket) {
   // join waiting room until there are enough players to start a new game
   socket.join('waiting room');
 
-  /**
-   * Handle chat messages
-   */
   socket.on('chat', function(msg) {
     if(users[socket.id].inGame !== null && msg) {
       console.log((new Date().toISOString()) + ' Me' + socket.id + ': ' + msg);
       
-      // Send message to opponent
       socket.broadcast.to('game' + users[socket.id].inGame.id).emit('chat', {
-        name: 'Opponent',
+        name: 'Contrincante',
         message: entities.encode(msg),
       });
-
-      // Send message to self
       io.to(socket.id).emit('chat', {
-        name: 'Me',
+        name: 'Yo ',
         message: entities.encode(msg),
       });
     }
@@ -128,7 +122,7 @@ function joinWaitingPlayers() {
     io.to(players[0].id).emit('update', game.getGameState(0, 0));
     io.to(players[1].id).emit('update', game.getGameState(1, 1));
 
-    console.log((new Date().toISOString()) + " " + players[0].id + " and " + players[1].id + " have joined game ID " + game.id);
+    console.log((new Date().toISOString()) + " " + players[0].id + " and " + players[1].id + " se unio al juego " + game.id);
   }
 }
 
@@ -138,11 +132,11 @@ function joinWaitingPlayers() {
  */
 function leaveGame(socket) {
   if(users[socket.id].inGame !== null) {
-    console.log((new Date().toISOString()) + ' ID ' + socket.id + ' left game ID ' + users[socket.id].inGame.id);
+    console.log((new Date().toISOString()) + ' ID ' + socket.id + ' abandono el juego ' + users[socket.id].inGame.id);
 
     // Notifty opponent
     socket.broadcast.to('game' + users[socket.id].inGame.id).emit('notification', {
-      message: 'Opponent has left the game'
+      message: 'El otro jugador abandono el juego.'
     });
 
     if(users[socket.id].inGame.gameStatus !== GameStatus.gameOver) {

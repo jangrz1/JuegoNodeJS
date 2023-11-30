@@ -11,8 +11,8 @@ var Game = (function() {
       squareWidth = (gridWidth - gridBorder * gridCols - gridBorder) / gridCols,
       turn = false, gameStatus, squareHover = { x: -1, y: -1 };
 
-  canvas[0] = document.getElementById('canvas-grid1');    // This player
-  canvas[1] = document.getElementById('canvas-grid2');    // Opponent
+  canvas[0] = document.getElementById('canvas-grid1');    
+  canvas[1] = document.getElementById('canvas-grid2');   
   context[0] = canvas[0].getContext('2d');
   context[1] = canvas[1].getContext('2d');
 
@@ -117,9 +117,9 @@ var Game = (function() {
       turn = turnState;
 
       if(turn) {
-        $('#turn-status').removeClass('alert-opponent-turn').addClass('alert-your-turn').html('It\'s your turn!');
+        $('#turn-status').removeClass('alert-opponent-turn').addClass('alert-your-turn').html('¡Es tu turno!');
       } else {
-        $('#turn-status').removeClass('alert-your-turn').addClass('alert-opponent-turn').html('Waiting for opponent.');
+        $('#turn-status').removeClass('alert-your-turn').addClass('alert-opponent-turn').html('Turno del oponente');
       }
     }
   };
@@ -134,10 +134,10 @@ var Game = (function() {
     
     if(isWinner) {
       $('#turn-status').removeClass('alert-opponent-turn').removeClass('alert-your-turn')
-              .addClass('alert-winner').html('You won! <a href="#" class="btn-leave-game">Play again</a>.');
+              .addClass('alert-winner').html('Felicidades, Ganaste!!! <a href="#" class="btn-leave-game">Jugar otra vez</a>.');
     } else {
       $('#turn-status').removeClass('alert-opponent-turn').removeClass('alert-your-turn')
-              .addClass('alert-loser').html('You lost. <a href="#" class="btn-leave-game">Play again</a>.');
+              .addClass('alert-loser').html('Perdiste pilin :c <a href="#" class="btn-leave-game">Jugar otra vez</a>.');
     }
     $('.btn-leave-game').click(sendLeaveRequest);
   }
