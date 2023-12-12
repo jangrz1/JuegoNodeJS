@@ -8,7 +8,7 @@ html,
 body,
 .container {
   height: 100%;
-  background-color: #F8EBF3;
+  background-color: #F6F4F1;
 
 }
 
@@ -134,15 +134,15 @@ h3 {
 }
 
 .alert-winner {
-  color: #56723E;
-  background-color: #ADE57D;
-  border-color: #ADE57D;
+  color: #4f9400;
+  background-color: #B5E57D;
+  border-color: #B5E57D;
 }
 
 .alert-loser {
-  color: #C42742;
-  background-color: #f2dede;
-  border-color: #ebccd1;
+  color: #E57D81;
+  background-color: #F2BEC0;
+  border-color: #F2BEC0;
 }
 
 
