@@ -134,10 +134,10 @@ var Game = (function() {
     
     if(isWinner) {
       $('#turn-status').removeClass('alert-opponent-turn').removeClass('alert-your-turn')
-              .addClass('alert-winner').html('Felicidades, Ganaste!!! <a href="#" class="btn-leave-game">Jugar otra vez</a>.');
+              .addClass('alert-winner').html('¡Ganaste!<a href="#" class="btn-leave-game">Jugar otra vez</a>.');
     } else {
       $('#turn-status').removeClass('alert-opponent-turn').removeClass('alert-your-turn')
-              .addClass('alert-loser').html('Perdiste pilin :c <a href="#" class="btn-leave-game">Jugar otra vez</a>.');
+              .addClass('alert-loser').html('Perdiste <a href="#" class="btn-leave-game">Jugar otra vez</a>.');
     }
     $('.btn-leave-game').click(sendLeaveRequest);
   }
