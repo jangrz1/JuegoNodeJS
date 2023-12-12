@@ -53,6 +53,7 @@ h3 {
   border-color: #D46BAE;
 }
 
+/* ... (other used styles) ... */
 
 .waiting-room {
   display: flex;
@@ -73,4 +74,24 @@ h3 {
   text-align: center;
   margin: 0;
 }
+
+.frontSide,
+.frontSide::before {
+  background: linear-gradient(43deg, rgb(173, 125, 229) 0%, rgb(229, 173, 125) 46%, rgb(125, 229, 173) 100%);
+}
+
+.frontSide::before {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  content: '';
+  width: 110%;
+  height: 110%;
+  position: absolute;
+  z-index: -1;
+  border-radius: 1em;
+  filter: blur(20px);
+  animation: animate 5s linear infinite;
+}
+
 
