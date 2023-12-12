@@ -269,9 +269,11 @@ button:active {
   width: 100%;
   height: 100%;
   text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
   cursor: pointer;
+}
+
+.myCard:hover .innerCard {
+  transform: rotateY(180deg);
 }
 
 .frontSide,
