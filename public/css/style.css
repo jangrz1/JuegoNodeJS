@@ -123,8 +123,8 @@ h3 {
 
 .alert-your-turn {
   color: #fbfffe;
-  background-color: #7dbcef;
-  border-color: #bce8f1;
+  background-color: #FBC475;
+  border-color: #FDE9CB;
 }
 
 .alert-opponent-turn {
@@ -134,13 +134,13 @@ h3 {
 }
 
 .alert-winner {
-  color: #6c8e6c;
+  color: #69AF2D;
   background-color: #dff0d8;
   border-color: #d6e9c6;
 }
 
 .alert-loser {
-  color: #a94442;
+  color: #C42742;
   background-color: #f2dede;
   border-color: #ebccd1;
 }
