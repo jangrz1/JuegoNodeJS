@@ -29,7 +29,7 @@ h3 {
 .panel,
 .panel-heading {
   border-radius: 0px;
-  border-color: #A74B7C;
+  border-color: #F8EBF3;
 }
 
 .panel,
@@ -43,13 +43,13 @@ h3 {
 .btn-primary:active,
 .btn-primary:focus {
   border-radius: 0px;
-  background-color: #A74B7C;
-  border-color: #A74B7C;
+  background-color: #D46BAE;
+  border-color: #D46BAE;
 }
 
 .btn-primary:hover {
   background-color: #000;
-  border-color: #A74B7C;
+  border-color: #D46BAE;
 }
 
 #loading {
