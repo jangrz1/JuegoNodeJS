@@ -16,7 +16,7 @@ var gameIdCounter = 1;
 app.use(express.static(__dirname + '/public'));
 
 http.listen(port, function(){
-  console.log('Ejecuntando en https://juego-node.onrender.com');
+  console.log('Ejecuntando en https://juegonode.onrender.com');
 });
 
 io.on('connection', function(socket) {
